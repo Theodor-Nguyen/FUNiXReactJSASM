@@ -7,9 +7,6 @@ class StaffList extends Component {
         return (
             <div className='container'>
                 <div className='row'>
-                <Card>
-                    
-                </Card>
                 </div>
             </div>
         );
