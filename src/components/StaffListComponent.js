@@ -14,9 +14,12 @@ class StaffList extends Component {
   onStaffSelect(staff) {
     this.setState({ selectedStaff: staff });
   }
+  onColumnSelect(col) {
+    this.setState({ gridDefault: col });
+  }
+
   renderStaff(staff) {
-    console.log(staff);
-    if (staff) {
+    if (staff != null) {
       return (
         <div className={this.state.gridDefault}>
           <Card>
@@ -38,7 +41,7 @@ class StaffList extends Component {
       );
     } else {
       return (
-        <div className={this.state.gridDefault}>
+        <div className="col-12 col-md-6 col-lg-4 mt-3">
           <p>Bấm vào tên nhân viên để xem thông tin.</p>
         </div>
       );
@@ -59,6 +62,38 @@ class StaffList extends Component {
     });
     return (
       <div className="container">
+        <div className="row m-3">
+          <button
+            className="btn btn-success mr-3"
+            onClick={() => this.onColumnSelect("col-md-2 mt-2")}
+          >
+            6 cột
+          </button>
+          <button
+            className="btn btn-success mr-3"
+            onClick={() => this.onColumnSelect("col-md-3 mt-2")}
+          >
+            4 cột
+          </button>
+          <button
+            className="btn btn-success mr-3"
+            onClick={() => this.onColumnSelect("col-md-4 mt-2")}
+          >
+            3 cột
+          </button>
+          <button
+            className="btn btn-success mr-3"
+            onClick={() => this.onColumnSelect("col-md-6 mt-2")}
+          >
+            2 cột
+          </button>
+          <button
+            className="btn btn-success mr-3"
+            onClick={() => this.onColumnSelect("col-md-12 mt-2")}
+          >
+            1 cột
+          </button>
+        </div>
         <div className="row">{staffsList}</div>
         <div className="row">{this.renderStaff(this.state.selectedStaff)}</div>
       </div>
