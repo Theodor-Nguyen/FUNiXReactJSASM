@@ -30,8 +30,16 @@ class Main extends Component {
 
       />;
     };
+  const DishWithId = ({match}) => {
     return (
-      <div>
+      <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(math.params.dishId,10))[0]}
+      comments =  {this.state.comments.filter((comment) => comment.dishId === parseInt(math.params.dishId,10))}
+      />
+    );
+  }
+
+    return (
+      <div> 
         <Header />
         <Switch>
           <Route path="/home" component={HomePage} />
