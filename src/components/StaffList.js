@@ -4,18 +4,17 @@ import { Card, CardImg, CardTitle } from "reactstrap";
 
 const RenderStaffItem = ({ staff }) => {
   return (
-    <Link to={`/staffs/${staff.id}`}>
+    <Link to={`/staff/${staff.id}`}>
       <Card className="staff-info">
         <CardImg width="100%" src={staff.image} alt={staff.name} />
-        <CardTitle>
-          <CardTitle>{staff.name}</CardTitle>
-        </CardTitle>
+        <CardTitle className="staff-name">{staff.name}</CardTitle>
       </Card>
     </Link>
   );
 };
 
 function StaffList(props) {
+  
   const [column, setColumn] = useState("col-6 col-md-4 col-lg-2 mt-3 mb-3");
 
   const staffList = props.staffs.map((staff) => {

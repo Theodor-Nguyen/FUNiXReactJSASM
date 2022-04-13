@@ -1,6 +1,10 @@
 .staff-info:hover {
     background: lightgreen;
 }
+.staff-name {
+    margin: auto;
+}
+
 
 .row-header {
     margin: 0px auto;

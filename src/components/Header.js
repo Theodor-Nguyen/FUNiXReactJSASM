@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import { Navbar, NavbarBrand, Nav, NavbarToggler, NavItem, Collapse } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import 'font-awesome/css/font-awesome.css';
 
 class Header extends Component {
   constructor(props){
@@ -23,10 +22,10 @@ class Header extends Component {
           <div>
               <Navbar dark expand="md" color="success" className="shadow mb-3">
                   <div className="container">
-                      <NavbarToggler onClick={this.toggleNav} />
                       <NavbarBrand className="mr-auto" href="/"><img src='assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
+                      <NavbarToggler onClick={this.toggleNav} />
                       <Collapse isOpen={this.state.isNavOpen} navbar>
-                          <Nav navbar>
+                          <Nav className="ml-auto"  navbar>
                           <NavItem>
                               <NavLink className="nav-link"  to='/staff'><span className="fa fa-users fa-lg"></span> Nhân viên</NavLink>
                           </NavItem>

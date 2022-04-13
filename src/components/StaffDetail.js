@@ -40,7 +40,7 @@ console.log(props);
           <div className="container">
             <div className="row">
               <Breadcrumb>
-                <BreadcrumbItem><Link to="/staffs">Nhân viên</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/staff">Nhân viên</Link></BreadcrumbItem>
                 <BreadcrumbItem active>{props.staff.name}</BreadcrumbItem>
               </Breadcrumb>
               <div className="col-12">

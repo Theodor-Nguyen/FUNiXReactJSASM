@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import StaffList from "./StaffList";
 import StaffDetail from "./StaffDetail";
+import Department from "./Department";
+import Salary from "./Salary";
 import Header from "./Header";
 import Footer from "./Footer";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 import { Switch, Route, Redirect } from "react-router-dom";
+import 'font-awesome/css/font-awesome.css';
+import 'bootstrap-social/bootstrap-social.css';
+
 
 function Main() {
 
@@ -23,9 +28,11 @@ function Main() {
     <div>
       <Header />
       <Switch>
-        <Route exact path="/staffs" component={() => <StaffList staffs={staffList} />} />
-        <Route path="/staffs/:staffID" component={StaffWithID} />
-        <Redirect to="/staffs" />
+        <Route exact path="/staff" component={() => <StaffList staffs={staffList} />} />
+        <Route exact path="/department" component={() => <Department departments={departments} />} />
+        <Route path="/staff/:staffID" component={StaffWithID} />
+        <Route path="/salary" component={() => <Salary staffs={staffList} />} />
+        <Redirect to="/staff" />
       </Switch>
       <Footer />
     </div>
