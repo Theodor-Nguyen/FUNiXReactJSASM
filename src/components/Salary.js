@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardTitle, CardBody, CardText } from "reactstrap";
 
 const basicSalary = 3000000;
@@ -19,21 +19,30 @@ function RenderSalary({ staff }) {
 }
 
 const Salary = (props) => {
-  const salary = props.staffs.map((staff) => {
-    return (
-      <div className="col-12 col-md-6 col-lg-4 mt-2 mb-2" key={staff.id}>
-        <RenderSalary staff={staff} />
-      </div>
-    );
-  });
+
+  const [sortSalary,setSortSalary]=useState(false)
+
+  const salary = props.staffs.sort((a,b)=> sortSalary ? a.salaryScale - b.salaryScale : b.salaryScale - a.salaryScale).map((staff) => {
+    return(
+        <div  key={staff.id} className="col-12 col-md-6 col-lg-4 mt-2 mb-2">
+            <RenderSalary staff={staff} />
+        </div>
+    )
+});
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-12 mt-3">
+      <div className="row justify-content-between">
+        <div className="col-5 mt-3">
           <h3>Bảng Lương</h3>
-          <hr />
         </div>
+        <div className="col-5 mt-3">
+        <button className="btn btn-primary btn-salary" onClick={()=>setSortSalary(!sortSalary)}>Sắp xếp theo Hệ số lương</button>
+        </div>
+        <div className="col-12">
+        <hr />
+        </div>
+
       </div>
       <div className="row shadow mb-3 mt-3">{salary}</div>
     </div>
