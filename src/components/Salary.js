@@ -20,7 +20,7 @@ function RenderSalary({ staff }) {
 
 const Salary = (props) => {
 
-  const [sortSalary,setSortSalary]=useState(false)
+  const [sortSalary,setSortSalary]= useState(false);
 
   const salary = props.staffs.sort((a,b)=> sortSalary ? a.salaryScale - b.salaryScale : b.salaryScale - a.salaryScale).map((staff) => {
     return(
