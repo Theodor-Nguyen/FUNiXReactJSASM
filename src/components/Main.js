@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 import StaffList from "./StaffList";
 import StaffDetail from "./StaffDetail";
 import Department from "./Department";
@@ -10,24 +11,37 @@ import { connect } from 'react-redux';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap-social/bootstrap-social.css';
 
-const mapStateToProps = state => {
+/* const mapStateToProps = state => {
   return {
     staffs: state.staffs,
     departments: state.departments,
   }
-}
+} */
 
 class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      staffs: STAFFS,
+      departments: DEPARTMENTS
+    }
+    this.addStaff = this.addStaff.bind(this);
   }
+
+addStaff(staff) {
+const id = Math.floor(Math.random()*1000 + 1)
+const newStaff = { id, ...staff};
+this.setState({
+  staffs: [...this.state.staffs, newStaff]
+});
+}  
 
   render() {
 
   const StaffWithID = ({ match }) => {
     return (
       <StaffDetail
-        staff={this.props.staffs.filter((item) => item.id === parseInt(match.params.staffID, 10))[0]}
+        staff={this.state.staffs.filter((item) => item.id === parseInt(match.params.staffID, 10))[0]}
       />
     );
   };
@@ -36,10 +50,10 @@ class Main extends Component {
     <div>
       <Header />
       <Switch>
-        <Route exact path="/staff" component={() => <StaffList staffs={this.props.staffs} />} />
-        <Route exact path="/department" component={() => <Department departments={this.props.departments} />} />
+        <Route exact path="/staff" component={() => <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />} />
+        <Route exact path="/department" component={() => <Department departments={this.state.departments} />} />
         <Route path="/staff/:staffID" component={StaffWithID} />
-        <Route path="/salary" component={() => <Salary staffs={this.props.staffs} />} />
+        <Route path="/salary" component={() => <Salary staffs={this.state.staffs} />} />
         <Redirect to="/staff" />
       </Switch>
       <Footer />
@@ -48,4 +62,4 @@ class Main extends Component {
  }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default (Main);
