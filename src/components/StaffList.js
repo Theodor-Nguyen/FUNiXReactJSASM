@@ -14,10 +14,17 @@ const RenderStaffItem = ({ staff }) => {
   );
 };
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !val || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = val => !isNaN(Number(val));
+
+
 class StaffList extends Component {
   constructor(props) {
     super(props);
       this.state = {
+        image: '/assets/images/alberto.png',
         nameS: "",
         modalOpen: false,
     }
@@ -38,21 +45,14 @@ class StaffList extends Component {
   }
 
   handleSubmit(values) {
-    const newStaff = {
-      name: this.state.name,
-      doB: this.state.doB,
-      salaryScale: this.state.salaryScale,
-      startDate: this.state.startDate,
-      department: this.state.department,
-      annualLeave: this.state.annualLeave,
-      overTime: this.state.overTime,
-      image: this.state.image,
-    };
-    this.props.addStaff(newStaff);
+    alert("Thoong tin nhan vien: " + JSON.stringify(values));
+    this.props.addStaff(values.name, values.doB, values.salaryScale, values.startDate, values.department, values.annualLeave, values.overTime, this.state.image)
     this.toggleModal();
   }
 
+  
   render() {
+    
     /* Map staffList */
     const staffList = this.props.staffs
       .filter((staff) => {
@@ -121,6 +121,19 @@ class StaffList extends Component {
                     className="form-control"
                     id="name"
                     name="name"
+                    validators={{
+                      required, minLength: minLength(3), maxLength: maxLength(30)
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".name"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
+                      minLength: "Yêu cầu nhiều hơn 2 ký tự. ",
+                      maxLength: "Yêu cầu ít hơn 30 ký tự. "
+                    }}
                   />
                 </Col>
               </Row>
@@ -135,6 +148,17 @@ class StaffList extends Component {
                     className="form-control"
                     id="doB"
                     name="doB"
+                    validators={{
+                      required
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".doB"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                    }}
                   />
                 </Col>
               </Row>
@@ -149,6 +173,17 @@ class StaffList extends Component {
                     type="date"
                     id="startDate"
                     name="startDate"
+                    validators={{
+                      required
+                    }}
+                  />
+                  <Errors 
+                    className="text-danger" 
+                    model=".startDate"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                    }}
                   />
                 </Col>
               </Row>
@@ -162,6 +197,9 @@ class StaffList extends Component {
                     className="form-control"
                     id="department"
                     name="department"
+                    validators={{
+                      required
+                    }}
                   >
                     <option>Sale</option>
                     <option>HR</option>
@@ -169,6 +207,13 @@ class StaffList extends Component {
                     <option>IT</option>
                     <option>Finance</option>
                   </Control.select>
+                <Errors className="text-danger" 
+                    model=".department"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                    }}
+                  />
                 </Col>
               </Row>
               <Row className="form-group mt-4">
@@ -181,6 +226,17 @@ class StaffList extends Component {
                     model=".salaryScale"
                     id="salaryScale"
                     name="salaryScale"
+                    validators={{
+                      required, isNumber
+                    }}
+                  />
+                    <Errors className="text-danger" 
+                    model=".salaryScale"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
+                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                    }}
                   />
                 </Col>
               </Row>
@@ -194,6 +250,17 @@ class StaffList extends Component {
                     model=".annualLeave"
                     id="annualLeave"
                     name="annualLeave"
+                    validators={{
+                      required, isNumber
+                    }}
+                  />
+                   <Errors className="text-danger" 
+                    model=".annualLeave"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
+                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                    }}
                   />
                 </Col>
               </Row>
@@ -207,6 +274,17 @@ class StaffList extends Component {
                     model=".overTime"
                     id="overTime"
                     name="overTime"
+                    validators={{
+                      required, isNumber
+                    }}
+                  />
+                   <Errors className="text-danger" 
+                    model=".overTime"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
+                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                    }}
                   />
                 </Col>
               </Row>

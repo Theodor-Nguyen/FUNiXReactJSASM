@@ -24,15 +24,6 @@ const mapDispatchToProps = dispatch => ({
 
 class Main extends Component {
 
-
-/* addStaff(staff) {
-const id = Math.floor(Math.random()*1000 + 1)
-const newStaff = { id, ...staff};
-this.setState({
-  staffs: [...this.state.staffs, newStaff]
-});
-}   */
-
   render() {
 
   const StaffWithID = ({ match }) => {
@@ -47,7 +38,7 @@ this.setState({
     <div>
       <Header />
       <Switch>
-        <Route exact path="/staff" component={() => <StaffList onAdd={this.addStaff} staffs={this.props.staffs} 
+        <Route exact path="/staff" component={() => <StaffList staffs={this.props.staffs} 
           addStaff={this.props.addStaff}
         />} />
         <Route exact path="/department" component={() => <Department departments={this.props.departments} />} />
