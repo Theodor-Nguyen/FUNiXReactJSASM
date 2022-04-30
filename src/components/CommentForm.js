@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import {  Label,  Button,  Modal,  ModalHeader,  ModalBody,  Row,  Col } from "reactstrap";
+import {
+  Label,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Row,
+  Col,
+} from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
@@ -24,7 +32,12 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
+    this.props.postComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   render() {
@@ -68,7 +81,9 @@ class CommentForm extends Component {
                     placeholder="Your Name"
                     className="form-control"
                     validators={{
-                      required, minLength: minLength(3), maxLength: maxLength(15)
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
                     }}
                   />
                   <Errors
@@ -76,9 +91,9 @@ class CommentForm extends Component {
                     model=".author"
                     show="touched"
                     messages={{
-                      required: 'Required. ',
-                      minLength: 'Must be greater than 2 characters. ',
-                      maxLength: 'Must be 15 characters or less.'
+                      required: "Required. ",
+                      minLength: "Must be greater than 2 characters. ",
+                      maxLength: "Must be 15 characters or less.",
                     }}
                   />
                 </Col>
