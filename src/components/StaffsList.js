@@ -68,16 +68,17 @@ class StaffList extends Component {
   }
 
   handleSubmit(values) {
-    this.props.postNewStaff(
-      values.name,
-      values.doB,
-      values.salaryScale,
-      values.startDate,
-      this.getDeptId(values.department, this.props.depts),
-      values.annualLeave,
-      values.overTime,
-      this.state.image
-    );
+    var newStaff = {
+      name: values.name,
+      doB: values.doB,
+      salaryScale: values.salaryScale,
+      startDate: values.startDate,
+      departmentId: this.getDeptId(values.department, this.props.depts),
+      annualLeave: values.annualLeave,
+      overTime: values.overTime,
+      image: this.state.image,
+    };
+    this.props.postNewStaff(newStaff);
     this.toggleModal();
   }
 

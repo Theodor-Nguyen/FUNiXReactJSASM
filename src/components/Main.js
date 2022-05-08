@@ -34,28 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchStaffSalary: () => {
     dispatch(fetchStaffSalary());
   },
-  postNewStaff: (
-    name,
-    doB,
-    salaryScale,
-    startDate,
-    departmentId,
-    annualLeave,
-    overTime,
-    image
-  ) => {
-    dispatch(
-      postNewStaff(
-        name,
-        doB,
-        salaryScale,
-        startDate,
-        departmentId,
-        annualLeave,
-        overTime,
-        image
-      )
-    );
+  postNewStaff: (newStaff) => {
+    dispatch(postNewStaff(newStaff));
   },
 });
 

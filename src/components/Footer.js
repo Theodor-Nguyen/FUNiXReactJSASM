@@ -79,7 +79,7 @@ function Footer(props) {
         </div>
         <div className="row justify-content-center">
           <div className="col-auto">
-            <p>© Copyright 2018 Staff Management App</p>
+            <p>© Copyright 2022 Hùng Nguyễn</p>
           </div>
         </div>
       </div>

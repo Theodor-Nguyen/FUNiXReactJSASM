@@ -7,61 +7,39 @@ export const addStaff = (staff) => ({
   payload: staff,
 });
 
-export const postNewStaff =
-  (
-    name,
-    doB,
-    salaryScale,
-    startDate,
-    departmentId,
-    annualLeave,
-    overTime,
-    image
-  ) =>
-  (dispatch) => {
-    const newStaff = {
-      name: name,
-      doB: doB,
-      salaryScale: salaryScale,
-      startDate: startDate,
-      departmentId: departmentId,
-      annualLeave: annualLeave,
-      overTime: overTime,
-      image: image,
-    };
-
-    return fetch(baseUrl + "staffs", {
-      method: "POST",
-      body: JSON.stringify(newStaff),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "same-origin",
-    })
-      .then(
-        (response) => {
-          if (response.ok) {
-            return response;
-          } else {
-            var error = new Error(
-              "Error " + response.status + ": " + response.statusText
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-        (error) => {
-          var errmess = new Error(error.message);
-          throw errmess;
+export const postNewStaff = (newStaff) => (dispatch) => {
+  return fetch(baseUrl + "staffs", {
+    method: "POST",
+    body: JSON.stringify(newStaff),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
         }
-      )
-      .then((response) => response.json())
-      .then((response) => dispatch(addStaff(response)))
-      .catch((error) => {
-        console.log("Post comments ", error.message);
-        alert("Your submit could not be posted\nError: " + error.message);
-      });
-  };
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(addStaff(response)))
+    .catch((error) => {
+      console.log("Post comments ", error.message);
+      alert("Your submit could not be posted\nError: " + error.message);
+    });
+};
 
 // Fetch Staffs
 export const fetchStaffs = () => (dispatch) => {
