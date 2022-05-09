@@ -100,6 +100,11 @@ class StaffList extends Component {
               isLoading={this.props.staffsLoading}
               errMess={this.props.staffsErrMess}
             />
+            <Row className="justify-content-center">
+              <Button className="mt-3" color="danger">
+                Delete
+              </Button>
+            </Row>
           </div>
         );
       });
@@ -333,14 +338,16 @@ class StaffList extends Component {
                   />
                 </Col>
               </Row>
-              <Button
-                className="mt-3"
-                type="submit"
-                value="submit"
-                color="primary"
-              >
-                Thêm
-              </Button>
+              <Row className="justify-content-center">
+                <Button
+                  className="mt-3"
+                  type="submit"
+                  value="submit"
+                  color="primary"
+                >
+                  Thêm
+                </Button>
+              </Row>
             </LocalForm>
           </ModalBody>
         </Modal>

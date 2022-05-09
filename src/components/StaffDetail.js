@@ -14,17 +14,20 @@ import {
   ModalBody,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, LocalForm } from "react-redux-form";
 import dateFormat from "dateformat";
 import { Loading } from "./Loading";
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !val || val.length <= len;
-const minLength = (len) => (val) => val && val.length >= len;
-const isNumber = (val) => !isNaN(Number(val));
-
-function RenderStaff({ staff, isLoading, errMess, dept }) {
+function RenderStaff({
+  staff,
+  isLoading,
+  errMess,
+  dept,
+  depts,
+  patchStaffInfo,
+}) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [image, setImage] = useState("/assets/images/alberto.png");
 
   const toggleModal = () => setModalOpen(!modalOpen);
   const getDeptId = (value, depts) => {
@@ -32,7 +35,21 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
     return deptWithId.id;
   };
 
-  const handleUpdate = (values) => {};
+  const handleUpdate = (values) => {
+    var infoStaff = {
+      id: staff.id,
+      name: values.name,
+      doB: values.doB,
+      salaryScale: values.salaryScale,
+      startDate: values.startDate,
+      departmentId: getDeptId(values.department, depts),
+      annualLeave: values.annualLeave,
+      overTime: values.overTime,
+      image: image,
+    };
+    patchStaffInfo(infoStaff);
+    toggleModal();
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -80,21 +97,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         className="form-control"
                         id="name"
                         name="name"
-                        validators={{
-                          required,
-                          minLength: minLength(3),
-                          maxLength: maxLength(30),
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".name"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                          minLength: "Yêu cầu nhiều hơn 2 ký tự. ",
-                          maxLength: "Yêu cầu ít hơn 30 ký tự. ",
-                        }}
                       />
                     </Col>
                   </Row>
@@ -109,17 +111,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         className="form-control"
                         id="doB"
                         name="doB"
-                        validators={{
-                          required,
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".doB"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                        }}
                       />
                     </Col>
                   </Row>
@@ -134,17 +125,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         type="date"
                         id="startDate"
                         name="startDate"
-                        validators={{
-                          required,
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".startDate"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                        }}
                       />
                     </Col>
                   </Row>
@@ -158,9 +138,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         className="form-control"
                         id="department"
                         name="department"
-                        validators={{
-                          required,
-                        }}
                       >
                         <option>Sale</option>
                         <option>HR</option>
@@ -168,14 +145,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         <option>IT</option>
                         <option>Finance</option>
                       </Control.select>
-                      <Errors
-                        className="text-danger"
-                        model=".department"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                        }}
-                      />
                     </Col>
                   </Row>
                   <Row className="form-group mt-4">
@@ -188,19 +157,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         model=".salaryScale"
                         id="salaryScale"
                         name="salaryScale"
-                        validators={{
-                          required,
-                          isNumber,
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".salaryScale"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                          isNumber: "Yêu cầu nhập đúng định dạng số. ",
-                        }}
                       />
                     </Col>
                   </Row>
@@ -214,19 +170,6 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         model=".annualLeave"
                         id="annualLeave"
                         name="annualLeave"
-                        validators={{
-                          required,
-                          isNumber,
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".annualLeave"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                          isNumber: "Yêu cầu nhập đúng định dạng số. ",
-                        }}
                       />
                     </Col>
                   </Row>
@@ -240,30 +183,19 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
                         model=".overTime"
                         id="overTime"
                         name="overTime"
-                        validators={{
-                          required,
-                          isNumber,
-                        }}
-                      />
-                      <Errors
-                        className="text-danger"
-                        model=".overTime"
-                        show="touched"
-                        messages={{
-                          required: "Yêu cầu nhập đầy đủ thông tin. ",
-                          isNumber: "Yêu cầu nhập đúng định dạng số. ",
-                        }}
                       />
                     </Col>
                   </Row>
-                  <Button
-                    className="mt-3"
-                    type="submit"
-                    value="submit"
-                    color="primary"
-                  >
-                    Thêm
-                  </Button>
+                  <Row className="justify-content-center">
+                    <Button
+                      className="mt-3"
+                      type="submit"
+                      value="submit"
+                      color="primary"
+                    >
+                      Cập nhật
+                    </Button>
+                  </Row>
                 </LocalForm>
               </ModalBody>
             </Modal>
@@ -273,6 +205,7 @@ function RenderStaff({ staff, isLoading, errMess, dept }) {
     );
 }
 
+//Container Component
 const StaffDetail = (props) => {
   if (props.staff != null) {
     return (
@@ -292,13 +225,13 @@ const StaffDetail = (props) => {
         <div className="row mb-3">
           <RenderStaff
             staff={props.staff}
-            dept={
-              props.depts.filter(
-                (dept) => dept.id === props.staff.departmentId
-              )[0]
-            }
+            depts={props.depts}
+            dept={props.depts.find(
+              (dept) => dept.id === props.staff.departmentId
+            )}
             isLoading={props.staffsLoading}
             errMess={props.staffsErrMess}
+            patchStaffInfo={props.patchStaffInfo}
           />
         </div>
       </div>

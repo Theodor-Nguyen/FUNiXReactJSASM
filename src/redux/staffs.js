@@ -28,6 +28,13 @@ export const Staffs = (
       var staff = action.payload;
       return { ...state, staffs: state.staffs.concat(staff) };
 
+    case ActionTypes.STAFFS_PATCHED:
+      var updatedStaff = action.payload;
+      var newStaffs = state.staffs
+        .filter((staff) => staff.id !== updatedStaff.id)
+        .push(updatedStaff);
+      return { ...state, staffs: newStaffs };
+
     default:
       return state;
   }

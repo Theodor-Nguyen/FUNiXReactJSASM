@@ -36,8 +36,50 @@ export const postNewStaff = (newStaff) => (dispatch) => {
     .then((response) => response.json())
     .then((response) => dispatch(addStaff(response)))
     .catch((error) => {
-      console.log("Post comments ", error.message);
-      alert("Your submit could not be posted\nError: " + error.message);
+      console.log("Submit new staff: ", error.message);
+      alert("Your submit could not be done\nError: " + error.message);
+    });
+};
+
+// Patch Staff Info
+
+export const updatedStaffs = (staff) => ({
+  type: ActionTypes.STAFFS_PATCHED,
+  payload: staff,
+});
+
+export const patchStaffInfo = (infoStaff) => (dispatch) => {
+  console.log(infoStaff);
+  return fetch(baseUrl + "staffs", {
+    method: "PATCH",
+    body: JSON.stringify(infoStaff),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(updatedStaffs(response)))
+    .catch((error) => {
+      console.log("Updating staffs: ", error.message);
+      alert("Your change could not be done\nError: " + error.message);
     });
 };
 
