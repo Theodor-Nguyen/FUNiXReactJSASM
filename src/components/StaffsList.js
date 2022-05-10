@@ -49,12 +49,34 @@ class StaffList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getDeptId = this.getDeptId.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   //Get departmentId
-  getDeptId(value, depts) {
-    const deptWithId = depts.find((dept) => dept.name === value);
-    return deptWithId.id;
+  getDeptId(value) {
+    let deptWithId = "";
+    switch (value) {
+      case "Sale":
+        deptWithId = "Dept01";
+        break;
+      case "HR":
+        deptWithId = "Dept02";
+        break;
+      case "Marketing":
+        deptWithId = "Dept03";
+        break;
+      case "IT":
+        deptWithId = "Dept04";
+        break;
+      case "Finance":
+        deptWithId = "Dept05";
+        break;
+
+      default:
+        deptWithId = "Dept01";
+        break;
+    }
+    return deptWithId;
   }
   //Set State nameS Function
   searchName(event) {
@@ -68,18 +90,23 @@ class StaffList extends Component {
   }
 
   handleSubmit(values) {
+    let deptId = this.getDeptId(values.department);
     var newStaff = {
       name: values.name,
       doB: values.doB,
       salaryScale: values.salaryScale,
       startDate: values.startDate,
-      departmentId: this.getDeptId(values.department, this.props.depts),
+      departmentId: deptId,
       annualLeave: values.annualLeave,
       overTime: values.overTime,
       image: this.state.image,
     };
     this.props.postNewStaff(newStaff);
     this.toggleModal();
+  }
+
+  handleDelete(id) {
+    this.props.deleteStaff(id);
   }
 
   render() {
@@ -240,10 +267,14 @@ class StaffList extends Component {
                     className="form-control"
                     id="department"
                     name="department"
+                    defaultValue={"default"}
                     validators={{
                       required,
                     }}
                   >
+                    <option value={"default"} disabled>
+                      Choose an option
+                    </option>
                     <option>Sale</option>
                     <option>HR</option>
                     <option>Marketing</option>

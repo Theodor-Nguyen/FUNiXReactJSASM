@@ -14,6 +14,7 @@ import {
   fetchStaffSalary,
   postNewStaff,
   patchStaffInfo,
+  deleteStaff,
 } from "../redux/ActionCreators";
 import "font-awesome/css/font-awesome.css";
 import "bootstrap-social/bootstrap-social.css";
@@ -41,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
   patchStaffInfo: (infoStaff) => {
     dispatch(patchStaffInfo(infoStaff));
   },
+  deleteStaff: (id) => {
+    dispatch(deleteStaff(id));
+  },
 });
 
 class Main extends Component {
@@ -51,8 +55,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.props.staffs);
-    console.log(this.props.staffs.staffs);
     const StaffWithID = ({ match }) => {
       return (
         <StaffDetail
@@ -97,7 +99,7 @@ class Main extends Component {
                 staffsLoading={this.props.staffs.isLoading}
                 staffsErrMess={this.props.staffs.errMess}
                 postNewStaff={this.props.postNewStaff}
-                depts={this.props.departments.departments}
+                deleteStaff={this.props.deleteStaff}
               />
             )}
           />

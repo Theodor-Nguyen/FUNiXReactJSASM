@@ -18,31 +18,45 @@ import { Control, LocalForm } from "react-redux-form";
 import dateFormat from "dateformat";
 import { Loading } from "./Loading";
 
-function RenderStaff({
-  staff,
-  isLoading,
-  errMess,
-  dept,
-  depts,
-  patchStaffInfo,
-}) {
+function RenderStaff({ staff, isLoading, errMess, dept, patchStaffInfo }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [image, setImage] = useState("/assets/images/alberto.png");
 
   const toggleModal = () => setModalOpen(!modalOpen);
-  const getDeptId = (value, depts) => {
-    const deptWithId = depts.find((dept) => dept.name === value);
-    return deptWithId.id;
+  var deptWithId = "";
+  const getDeptId = (value) => {
+    switch (value) {
+      case "Sale":
+        deptWithId = "Dept01";
+        break;
+      case "HR":
+        deptWithId = "Dept02";
+        break;
+      case "Marketing":
+        deptWithId = "Dept03";
+        break;
+      case "IT":
+        deptWithId = "Dept04";
+        break;
+      case "Finance":
+        deptWithId = "Dept05";
+        break;
+
+      default:
+        deptWithId = dept.id;
+        break;
+    }
   };
 
   const handleUpdate = (values) => {
+    getDeptId(values.department);
     var infoStaff = {
       id: staff.id,
       name: values.name,
       doB: values.doB,
       salaryScale: values.salaryScale,
       startDate: values.startDate,
-      departmentId: getDeptId(values.department, depts),
+      departmentId: deptWithId,
       annualLeave: values.annualLeave,
       overTime: values.overTime,
       image: image,
@@ -138,7 +152,11 @@ function RenderStaff({
                         className="form-control"
                         id="department"
                         name="department"
+                        defaultValue={"default"}
                       >
+                        <option value={"default"} disabled>
+                          Choose an option
+                        </option>
                         <option>Sale</option>
                         <option>HR</option>
                         <option>Marketing</option>
@@ -225,7 +243,6 @@ const StaffDetail = (props) => {
         <div className="row mb-3">
           <RenderStaff
             staff={props.staff}
-            depts={props.depts}
             dept={props.depts.find(
               (dept) => dept.id === props.staff.departmentId
             )}

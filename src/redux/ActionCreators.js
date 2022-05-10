@@ -1,11 +1,12 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-// Add New Staff
-export const addStaff = (staff) => ({
-  type: ActionTypes.ADD_STAFF,
-  payload: staff,
+export const updatedStaffs = (staffs) => ({
+  type: ActionTypes.UPDATED_STAFFS,
+  payload: staffs,
 });
+
+// Post New Staff
 
 export const postNewStaff = (newStaff) => (dispatch) => {
   return fetch(baseUrl + "staffs", {
@@ -34,7 +35,7 @@ export const postNewStaff = (newStaff) => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((response) => dispatch(addStaff(response)))
+    .then((response) => dispatch(updatedStaffs(response)))
     .catch((error) => {
       console.log("Submit new staff: ", error.message);
       alert("Your submit could not be done\nError: " + error.message);
@@ -42,11 +43,6 @@ export const postNewStaff = (newStaff) => (dispatch) => {
 };
 
 // Patch Staff Info
-
-export const updatedStaffs = (staff) => ({
-  type: ActionTypes.STAFFS_PATCHED,
-  payload: staff,
-});
 
 export const patchStaffInfo = (infoStaff) => (dispatch) => {
   console.log(infoStaff);
@@ -80,6 +76,37 @@ export const patchStaffInfo = (infoStaff) => (dispatch) => {
     .catch((error) => {
       console.log("Updating staffs: ", error.message);
       alert("Your change could not be done\nError: " + error.message);
+    });
+};
+
+// Post New Staff
+
+export const deleteStaff = (id) => (dispatch) => {
+  return fetch(baseUrl + `staffs/${id}`, {
+    method: "DELETE",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(updatedStaffs(response)))
+    .catch((error) => {
+      console.log("Delete staff: ", error.message);
+      alert("You could not delete\nError: " + error.message);
     });
 };
 

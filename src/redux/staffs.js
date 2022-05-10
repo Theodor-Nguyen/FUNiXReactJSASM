@@ -24,16 +24,9 @@ export const Staffs = (
         staffs: [],
       };
 
-    case ActionTypes.ADD_STAFF:
-      var staff = action.payload;
-      return { ...state, staffs: state.staffs.concat(staff) };
-
-    case ActionTypes.STAFFS_PATCHED:
-      var updatedStaff = action.payload;
-      var newStaffs = state.staffs
-        .filter((staff) => staff.id !== updatedStaff.id)
-        .push(updatedStaff);
-      return { ...state, staffs: newStaffs };
+    case ActionTypes.UPDATED_STAFFS:
+      const updatedStaffs = action.payload;
+      return { ...state, staffs: updatedStaffs };
 
     default:
       return state;
