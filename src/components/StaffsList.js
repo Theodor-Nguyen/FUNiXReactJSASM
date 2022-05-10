@@ -128,7 +128,11 @@ class StaffList extends Component {
               errMess={this.props.staffsErrMess}
             />
             <Row className="justify-content-center">
-              <Button className="mt-3" color="danger">
+              <Button
+                className="mt-3"
+                color="danger"
+                onClick={this.handleDelete(staff.id)}
+              >
                 Delete
               </Button>
             </Row>
