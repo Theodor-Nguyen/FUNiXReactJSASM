@@ -1,12 +1,11 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-export const updatedStaffs = (staffs) => ({
-  type: ActionTypes.UPDATED_STAFFS,
+// Post New Staff
+export const addNewStaff = (staffs) => ({
+  type: ActionTypes.ADD_NEWSTAFF,
   payload: staffs,
 });
-
-// Post New Staff
 
 export const postNewStaff = (newStaff) => (dispatch) => {
   return fetch(baseUrl + "staffs", {
@@ -35,7 +34,7 @@ export const postNewStaff = (newStaff) => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((response) => dispatch(updatedStaffs(response)))
+    .then((response) => dispatch(addNewStaff(response)))
     .catch((error) => {
       console.log("Submit new staff: ", error.message);
       alert("Your submit could not be done\nError: " + error.message);
@@ -43,6 +42,10 @@ export const postNewStaff = (newStaff) => (dispatch) => {
 };
 
 // Patch Staff Info
+export const updatedStaffs = (staffs) => ({
+  type: ActionTypes.UPDATED_STAFFS,
+  payload: staffs,
+});
 
 export const patchStaffInfo = (infoStaff) => (dispatch) => {
   console.log(infoStaff);
@@ -79,9 +82,14 @@ export const patchStaffInfo = (infoStaff) => (dispatch) => {
     });
 };
 
-// Post New Staff
+// Delete Staff
+export const deletedStaffs = (staffs) => ({
+  type: ActionTypes.DELETED_STAFFS,
+  payload: staffs,
+});
 
 export const deleteStaff = (id) => (dispatch) => {
+  debugger;
   return fetch(baseUrl + `staffs/${id}`, {
     method: "DELETE",
   })
@@ -103,7 +111,7 @@ export const deleteStaff = (id) => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((response) => dispatch(updatedStaffs(response)))
+    .then((response) => dispatch(deletedStaffs(response)))
     .catch((error) => {
       console.log("Delete staff: ", error.message);
       alert("You could not delete\nError: " + error.message);

@@ -9,6 +9,14 @@ background: lightgreen;
 color:#0f0f0f;
 }
 
+.btn.btn-info {
+    width: max-content;
+    height: auto;
+}
+.btn.btn-info:hover {
+    background: blue;
+    color: white;
+}
 
 
 .row-header {

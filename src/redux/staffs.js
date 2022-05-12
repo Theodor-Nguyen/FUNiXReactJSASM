@@ -24,9 +24,17 @@ export const Staffs = (
         staffs: [],
       };
 
+    case ActionTypes.ADD_NEWSTAFF:
+      const addStaffs = action.payload;
+      return { ...state, staffs: addStaffs };
+
     case ActionTypes.UPDATED_STAFFS:
       const updatedStaffs = action.payload;
       return { ...state, staffs: updatedStaffs };
+
+    case ActionTypes.DELETED_STAFFS:
+      const deletedStaffs = action.payload;
+      return { ...state, staffs: deletedStaffs };
 
     default:
       return state;

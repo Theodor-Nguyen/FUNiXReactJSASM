@@ -106,7 +106,9 @@ class StaffList extends Component {
   }
 
   handleDelete(id) {
-    this.props.deleteStaff(id);
+    if (window.confirm("Do you really want to delete this staff?!")) {
+      this.props.deleteStaff(id);
+    } else return;
   }
 
   render() {
@@ -131,7 +133,7 @@ class StaffList extends Component {
               <Button
                 className="mt-3"
                 color="danger"
-                onClick={this.handleDelete(staff.id)}
+                onClick={() => this.handleDelete(staff.id)}
               >
                 Delete
               </Button>
@@ -148,7 +150,10 @@ class StaffList extends Component {
             <h3>Nhân Viên</h3>
           </div>
           <div className="col-2 col-md-2 mt-3">
-            <button className="btn btn-success" onClick={this.toggleModal}>
+            <button
+              className="btn btn-success btn-add"
+              onClick={this.toggleModal}
+            >
               <span className="fa fa-plus fa-lg"></span>
             </button>
           </div>
