@@ -1,26 +1,38 @@
 import React, { useState } from "react";
 import { Card, CardTitle, CardBody, CardText } from "reactstrap";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const basicSalary = 3000000;
 const hourlySalary = 200000 / 8;
 
 function RenderSalary({ obj }) {
   return (
-    <Card>
-      <CardTitle className="p-3 bg-white rounded m-2">{obj.name}</CardTitle>
-      <CardBody>
-        <CardText>Mã nhân viên: {obj.id}</CardText>
-        <CardText>Hệ số lương: {obj.salaryScale}</CardText>
-        <CardText>Số giờ làm thêm: {obj.overTime}</CardText>
-        <CardText className="bg-light p-2 shadow">
-          Lương:{" "}
-          {(
-            obj.salaryScale * basicSalary +
-            obj.overTime * hourlySalary
-          ).toFixed(0)}
-        </CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform
+      in
+      transformProps={{
+        exitTransform: "scale(0.5) translateY(-50%)",
+      }}
+    >
+      <Stagger in>
+        <Card>
+          <CardTitle className="p-3 bg-white rounded m-2">{obj.name}</CardTitle>
+          <Fade in>
+            <CardBody>
+              <CardText>Mã nhân viên: {obj.id}</CardText>
+              <CardText>Hệ số lương: {obj.salaryScale}</CardText>
+              <CardText>Số giờ làm thêm: {obj.overTime}</CardText>
+              <CardText className="bg-light p-2 shadow">
+                Lương:{" "}
+                {(
+                  obj.salaryScale * basicSalary +
+                  obj.overTime * hourlySalary
+                ).toFixed(0)}
+              </CardText>
+            </CardBody>
+          </Fade>
+        </Card>
+      </Stagger>
+    </FadeTransform>
   );
 }
 

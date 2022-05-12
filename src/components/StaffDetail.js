@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { Control, LocalForm } from "react-redux-form";
 import dateFormat from "dateformat";
 import { Loading } from "./Loading";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 function RenderStaff({ staff, isLoading, errMess, dept, patchStaffInfo }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -74,26 +75,45 @@ function RenderStaff({ staff, isLoading, errMess, dept, patchStaffInfo }) {
       <div className="col-12">
         <div className="row">
           <div className="col-12 col-md-4">
-            <CardImg width="100%" src={staff.image} alt={staff.name} />
+            <FadeTransform
+              in
+              transformProps={{
+                exitTransform: "scale(0.5) translateY(-50%)",
+              }}
+            >
+              <CardImg width="100%" src={staff.image} alt={staff.name} />
+            </FadeTransform>
           </div>
           <div className="col-12 col-md-8">
-            <CardTitle>Họ và tên: {staff.name}</CardTitle>
-            <CardText>
-              Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}
-            </CardText>
-            <CardText>
-              Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}
-            </CardText>
-            <CardText>Phòng ban: {dept.name}</CardText>
-            <CardText>Số ngày nghỉ còn lại: {staff.annualLeave}</CardText>
-            <CardText>Số ngày đã làm thêm: {staff.overTime}</CardText>
+            <FadeTransform
+              in
+              transformProps={{
+                exitTransform: "scale(0.5) translateY(-50%)",
+              }}
+            >
+              <Stagger in>
+                <Fade in>
+                  <CardTitle>Họ và tên: {staff.name}</CardTitle>
+                  <CardText>
+                    Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}
+                  </CardText>
+                  <CardText>
+                    Ngày vào công ty:{" "}
+                    {dateFormat(staff.startDate, "dd/mm/yyyy")}
+                  </CardText>
+                  <CardText>Phòng ban: {dept.name}</CardText>
+                  <CardText>Số ngày nghỉ còn lại: {staff.annualLeave}</CardText>
+                  <CardText>Số ngày đã làm thêm: {staff.overTime}</CardText>
+                </Fade>
 
-            <div className="col-3 col-md-3 mt-3">
-              <button className="btn btn-info" onClick={toggleModal}>
-                <span className="fa fa-pencil-square-o fa-lg"></span> Cập nhật
-              </button>
-            </div>
-
+                <div className="col-3 col-md-3 mt-3">
+                  <button className="btn btn-info" onClick={toggleModal}>
+                    <span className="fa fa-pencil-square-o fa-lg"></span> Cập
+                    nhật
+                  </button>
+                </div>
+              </Stagger>
+            </FadeTransform>
             {/* Update info staff */}
             <Modal isOpen={modalOpen} toggle={toggleModal}>
               <ModalHeader toggle={toggleModal}>

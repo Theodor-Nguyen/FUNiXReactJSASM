@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from "./Loading";
+import { FadeTransform } from "react-animation-components";
 
 const RenderStaffItem = ({ staff, isLoading, errMess }) => {
   if (isLoading) {
@@ -23,10 +24,17 @@ const RenderStaffItem = ({ staff, isLoading, errMess }) => {
   } else
     return (
       <Link to={`/staffs/${staff.id}`}>
-        <Card className="staff-info">
-          <CardImg width="100%" src={staff.image} alt={staff.name} />
-          <CardTitle className="staff-name">{staff.name}</CardTitle>
-        </Card>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: "scale(0.5) translateY(-50%)",
+          }}
+        >
+          <Card className="staff-info">
+            <CardImg width="100%" src={staff.image} alt={staff.name} />
+            <CardTitle className="staff-name">{staff.name}</CardTitle>
+          </Card>
+        </FadeTransform>
       </Link>
     );
 };
