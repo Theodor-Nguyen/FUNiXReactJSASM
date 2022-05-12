@@ -1,11 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {  Card,  CardImg,  CardTitle,  Col,  Row,  Button,  Label,  Modal,  ModalHeader,  ModalBody} from "reactstrap";
-import { Control, LocalForm, Errors} from 'react-redux-form';
+import {
+  Card,
+  CardImg,
+  CardTitle,
+  Col,
+  Row,
+  Button,
+  Label,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
+import { Control, LocalForm, Errors } from "react-redux-form";
 
 const RenderStaffItem = ({ staff }) => {
   return (
-    <Link to={`/staff/${staff.id}`}>
+    <Link to={`/staffs/${staff.id}`}>
       <Card className="staff-info">
         <CardImg width="100%" src={staff.image} alt={staff.name} />
         <CardTitle className="staff-name">{staff.name}</CardTitle>
@@ -15,19 +26,18 @@ const RenderStaffItem = ({ staff }) => {
 };
 
 const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !val || (val.length <= len);
-const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = val => !isNaN(Number(val));
-
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+const isNumber = (val) => !isNaN(Number(val));
 
 class StaffList extends Component {
   constructor(props) {
     super(props);
-      this.state = {
-        image: '/assets/images/alberto.png',
-        nameS: "",
-        modalOpen: false,
-    }
+    this.state = {
+      image: "/assets/images/alberto.png",
+      nameS: "",
+      modalOpen: false,
+    };
     this.searchName = this.searchName.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,13 +56,20 @@ class StaffList extends Component {
 
   handleSubmit(values) {
     alert("Thoong tin nhan vien: " + JSON.stringify(values));
-    this.props.addStaff(values.name, values.doB, values.salaryScale, values.startDate, values.department, values.annualLeave, values.overTime, this.state.image)
+    this.props.addStaff(
+      values.name,
+      values.doB,
+      values.salaryScale,
+      values.startDate,
+      values.department,
+      values.annualLeave,
+      values.overTime,
+      this.state.image
+    );
     this.toggleModal();
   }
 
-  
   render() {
-    
     /* Map staffList */
     const staffList = this.props.staffs
       .filter((staff) => {
@@ -65,8 +82,7 @@ class StaffList extends Component {
       .map((staff) => {
         return (
           <div key={staff.id} className="col-6 col-md-4 col-lg-2 mt-3 mb-3">
-            <RenderStaffItem staff={staff} 
-            />
+            <RenderStaffItem staff={staff} />
           </div>
         );
       });
@@ -110,8 +126,8 @@ class StaffList extends Component {
         <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={(values)=>this.handleSubmit(values)}>
-            <Row className="form-group mt-4">
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+              <Row className="form-group mt-4">
                 <Label htmlFor="name" md={4}>
                   Họ và tên
                 </Label>
@@ -122,7 +138,9 @@ class StaffList extends Component {
                     id="name"
                     name="name"
                     validators={{
-                      required, minLength: minLength(3), maxLength: maxLength(30)
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(30),
                     }}
                   />
                   <Errors
@@ -132,7 +150,7 @@ class StaffList extends Component {
                     messages={{
                       required: "Yêu cầu nhập đầy đủ thông tin. ",
                       minLength: "Yêu cầu nhiều hơn 2 ký tự. ",
-                      maxLength: "Yêu cầu ít hơn 30 ký tự. "
+                      maxLength: "Yêu cầu ít hơn 30 ký tự. ",
                     }}
                   />
                 </Col>
@@ -149,7 +167,7 @@ class StaffList extends Component {
                     id="doB"
                     name="doB"
                     validators={{
-                      required
+                      required,
                     }}
                   />
                   <Errors
@@ -157,7 +175,7 @@ class StaffList extends Component {
                     model=".doB"
                     show="touched"
                     messages={{
-                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
                     }}
                   />
                 </Col>
@@ -174,15 +192,15 @@ class StaffList extends Component {
                     id="startDate"
                     name="startDate"
                     validators={{
-                      required
+                      required,
                     }}
                   />
-                  <Errors 
-                    className="text-danger" 
+                  <Errors
+                    className="text-danger"
                     model=".startDate"
                     show="touched"
                     messages={{
-                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
                     }}
                   />
                 </Col>
@@ -198,7 +216,7 @@ class StaffList extends Component {
                     id="department"
                     name="department"
                     validators={{
-                      required
+                      required,
                     }}
                   >
                     <option>Sale</option>
@@ -207,11 +225,12 @@ class StaffList extends Component {
                     <option>IT</option>
                     <option>Finance</option>
                   </Control.select>
-                <Errors className="text-danger" 
+                  <Errors
+                    className="text-danger"
                     model=".department"
                     show="touched"
                     messages={{
-                      required: "Yêu cầu nhập đầy đủ thông tin. "
+                      required: "Yêu cầu nhập đầy đủ thông tin. ",
                     }}
                   />
                 </Col>
@@ -227,15 +246,17 @@ class StaffList extends Component {
                     id="salaryScale"
                     name="salaryScale"
                     validators={{
-                      required, isNumber
+                      required,
+                      isNumber,
                     }}
                   />
-                    <Errors className="text-danger" 
+                  <Errors
+                    className="text-danger"
                     model=".salaryScale"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập đầy đủ thông tin. ",
-                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                      isNumber: "Yêu cầu nhập đúng định dạng số. ",
                     }}
                   />
                 </Col>
@@ -251,15 +272,17 @@ class StaffList extends Component {
                     id="annualLeave"
                     name="annualLeave"
                     validators={{
-                      required, isNumber
+                      required,
+                      isNumber,
                     }}
                   />
-                   <Errors className="text-danger" 
+                  <Errors
+                    className="text-danger"
                     model=".annualLeave"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập đầy đủ thông tin. ",
-                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                      isNumber: "Yêu cầu nhập đúng định dạng số. ",
                     }}
                   />
                 </Col>
@@ -275,20 +298,27 @@ class StaffList extends Component {
                     id="overTime"
                     name="overTime"
                     validators={{
-                      required, isNumber
+                      required,
+                      isNumber,
                     }}
                   />
-                   <Errors className="text-danger" 
+                  <Errors
+                    className="text-danger"
                     model=".overTime"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập đầy đủ thông tin. ",
-                      isNumber: "Yêu cầu nhập đúng định dạng số. "
+                      isNumber: "Yêu cầu nhập đúng định dạng số. ",
                     }}
                   />
                 </Col>
               </Row>
-              <Button className="mt-3" type="submit" value="submit" color="primary">
+              <Button
+                className="mt-3"
+                type="submit"
+                value="submit"
+                color="primary"
+              >
                 Thêm
               </Button>
             </LocalForm>
