@@ -1,19 +1,29 @@
 import React from "react";
 import { Card, CardTitle, CardBody, CardText } from "reactstrap";
 import { Link } from "react-router-dom";
+import { FadeTransform, Stagger } from "react-animation-components";
 
 const RenderDepartment = ({ dept }) => {
   return (
-    <Link to={`/departments/${dept.id}`}>
-      <Card>
-        <CardTitle className="m-2">
-          <strong>{dept.name}</strong>
-        </CardTitle>
-        <CardBody>
-          <CardText>Số lượng nhân viên: {dept.numberOfStaff}</CardText>
-        </CardBody>
-      </Card>
-    </Link>
+    <FadeTransform
+      in
+      transformProps={{
+        exitTransform: "scale(0.1) translateX(200%)",
+      }}
+    >
+      <Stagger in>
+        <Link to={`/departments/${dept.id}`}>
+          <Card>
+            <CardTitle className="m-2">
+              <strong>{dept.name}</strong>
+            </CardTitle>
+            <CardBody>
+              <CardText>Số lượng nhân viên: {dept.numberOfStaff}</CardText>
+            </CardBody>
+          </Card>
+        </Link>
+      </Stagger>
+    </FadeTransform>
   );
 };
 
